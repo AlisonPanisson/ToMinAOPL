@@ -1,0 +1,89 @@
+/*
+    JaCaMo Project File
+    
+    This file defines the initial state of the MAS (initial agents, environment, organisation, ....)
+
+*/
+
+mas lier_bullshiter_deceiver {
+	
+	   	agent car_dealer : common.asl {
+  		beliefs: 	safe(ford)
+  					safe(bmw)
+  					~safe(renault)
+  					~fast(ford)
+  					fast(bmw)
+  					~confortable(ford)
+  					~confortable(bmw)
+  					~confortable(renautl)
+  					large_storage(bmw)
+  					~large_storage(renault)
+ 		goals: 	open(saleroom)	
+ 				believes(_,buy(_))
+  	}
+  	
+  	agent buyer1 : common.asl {	
+    	beliefs: 	~ignorant(car_dealer,safe(_))
+    				~ignorant(car_dealer,fast(_))
+    				inference(buy(Car),[safe(Car),fast(Car)]) 
+    	goals: 		enter(saleroom)
+    				tell(car_dealer,inference(buy(Car),[safe(Car),fast(Car)]))
+    				ask(car_dealer,safe(renault))
+    				ask(car_dealer,fast(renault))
+    				leave(saleroom)
+  	}
+  
+    agent buyer2 : common.asl {	
+    	beliefs: 	~ignorant(car_dealer,safe(_))
+    				~ignorant(car_dealer,large_storage(_))
+    				inference(buy(Car),[large_storage(Car),safe(Car)])  
+    	goals: 		enter(saleroom)
+    				tell(car_dealer,inference(buy(Car),[large_storage(Car),safe(Car)]))
+    				ask(car_dealer,safe(renault))
+    				ask(car_dealer,safe(bmw))
+    				ask(car_dealer,large_storage(bmw))
+    				leave(saleroom)	  
+  	}
+  	
+  	agent buyer3 : common.asl {	
+    	beliefs: 	~ignorant(car_dealer,safe(_))
+    				~ignorant(car_dealer,fast(_))
+    				inference(buy(Car),[safe(Car),fast(Car),confortable(Car)]) 
+    	goals: 		enter(saleroom)
+    				tell(car_dealer,inference(buy(Car),[safe(Car),fast(Car),confortable(Car)]))
+    				//ask(car_dealer,safe(ford)) 
+    				ask(car_dealer,confortable(ford))
+    				ask(car_dealer,fast(ford))
+    				leave(saleroom)
+  	}
+  	
+    agent buyer4 : common.asl {	
+  		beliefs: 	~ignorant(car_dealer,safe(_))
+    				~ignorant(car_dealer,fast(_))
+    				inference(buy(Car),[safe(Car),fast(Car),confortable(Car),large_storage(Car)]) 
+    	goals: 		enter(saleroom)
+    				tell(car_dealer,inference(buy(Car),[safe(Car),fast(Car),confortable(Car),large_storage(Car)]))
+    				ask(car_dealer,safe(ford))
+    				ask(car_dealer,confortable(ford))
+    				ask(car_dealer,fast(ford))
+    				ask(car_dealer,fast(renault))
+    				ask(car_dealer,large_storage(renault))
+    				ask(car_dealer,safe(bmw))
+    				//ask(car_dealer,large_storage(ford))
+    				leave(saleroom)
+  	}
+  	
+  	workspace saleroom {
+	        artifact saleroom : saleroom.Saleroom() {
+	            focused-by: car_dealer, buyer1, buyer2, buyer3, buyer4
+	        }
+    }
+  	
+  	// agent source path
+    asl-path: src/agt
+              src/agt/inc
+
+    
+
+}
+
