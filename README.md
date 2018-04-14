@@ -1,4 +1,4 @@
-# ToMinAOPL - Theory of Mind in Agent-Oriented Programming Languages
+# ToMinAOPL - ToM in AOPL
 
 This project aims to investigate the modelling of Theory of Mind (ToM) in Agent-Oriented Programming Languages (AOPL).
 
