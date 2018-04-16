@@ -35,7 +35,7 @@ infers(believes(Ag,Prop),believes(Ag,Need)):- believes(Ag,inference(Prop,S)) & m
 +!leave(Aid) <- .wait(3000); leave[artifact_id(Aid)].
 
 +!tell(Agent,Prop) <- .wait(500); .send(Agent,tell,Prop).
-+!ask(Agent,Prop) <- .wait(1000); .send(Agent,ask,Prop).
++!ask(Agent,Prop): ~ignorant(Agent,Prop) <- .wait(1000); .send(Agent,ask,Prop).
 
 +!believes(Ag,Prop) <- .suspend(believes(Ag,Prop)). //simulating the car dealer desires
 +!check_deceive(Ag): .desire(believes(Ag,T)) & desires(Ag,T) & (believes(Ag,inference(T,S)) & believes_list(Ag,S)) <- .print("I did deceive the ", Ag, " about ", T).
